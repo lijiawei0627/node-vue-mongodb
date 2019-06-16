@@ -30,7 +30,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
 
 router.get('/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
   console.log('5')
-  profiles.findOne({_id: req.params})
+  profiles.findById(req.params.id)
     .then(profile => {
       if (profile) {
         console.log('1')
