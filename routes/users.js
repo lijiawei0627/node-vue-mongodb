@@ -1,5 +1,5 @@
 const express = require('express')
-const User = require('../models/config/User')
+const User = require('../models/User')
 const md5 = require('md5')
 const gravatar = require('gravatar')
 const jwt = require('jsonwebtoken') // 引入jwt

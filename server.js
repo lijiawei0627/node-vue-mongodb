@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const routes = require('./routes/users')
+const profiles = require('./routes/profiles')
 const passport = require('passport')
 
 // 使用body-parser中间件
@@ -9,11 +10,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use("/api/users", routes);
+app.use('/api/profiles', profiles)
 
 // passport初始化
 app.use(passport.initialize());
 
-require('./models/config/possport')(passport);
+require('./config/possport')(passport);
 
 
 // app.get('/', (req, res) => {
