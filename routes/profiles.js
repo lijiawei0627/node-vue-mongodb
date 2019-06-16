@@ -44,4 +44,18 @@ router.get('/:id', passport.authenticate('jwt', {session: false}), (req, res) =>
       res.status(404).json(err)
     })
 })
+
+router.post('/edit/:id', passport.authenticate('jwt', {session: false}),(req, res) => {
+  profiles.findOneAndUpdate({_id: req.params.id}, req.body, (err, data) => {
+    if (err) throw err;
+    res.json(data)
+  })
+})
+
+router.post('/delete/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
+  profiles.findOneAndRemove({_id: req.params.id}, (err, data) => {
+    if (err) throw err;
+    res.json(data)
+  })
+})
 module.exports = router
