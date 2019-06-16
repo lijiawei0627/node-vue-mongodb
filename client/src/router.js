@@ -17,6 +17,16 @@ export default new Router({
       path: '/index',
       name: 'Index',
       component: Index
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: () => import('./views/register.vue')
+    },
+    {
+      path: '*',
+      name: '404',
+      component: () => import('./views/404.vue')
     }
   ]
 })

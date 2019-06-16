@@ -1,0 +1,16 @@
+<template>
+  <div class="nofound">
+    <img src="../assets/404.gif" alt="">
+  </div>
+</template>
+
+<style lang="stylus" scoped>
+.nofound
+  width: 100%
+  height: 753px
+  overflow hidden
+  img 
+    width: 100%
+    height: 100%
+    background-size: cover
+</style>
