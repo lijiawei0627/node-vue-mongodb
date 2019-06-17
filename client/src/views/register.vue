@@ -117,8 +117,8 @@ export default {
                   message: '账号注册成功',
                   type: 'success'
                 })
+                this.$router.push('/login')
               })
-              this.$router.push('/login')
           }
         });
       },

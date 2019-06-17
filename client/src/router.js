@@ -1,27 +1,31 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from './views/index.vue'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
       redirect: '/index',
-      component: Index
+      component: () => import('./views/Index.vue')
     },
     {
       path: '/index',
       name: 'Index',
-      component: Index
+      component: () => import('./views/Index.vue')
     },
     {
       path: '/register',
       name: 'Register',
       component: () => import('./views/Register.vue')
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import('./views/Login.vue')
     },
     {
       path: '*',
@@ -30,3 +34,14 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  const isLogin = localStorage.Token? true : false
+  if (to.path == '/login' || to.path == '/register') {
+    next()
+  } else {
+    isLogin? next() : next('/login')
+  }
+})
+
+export default router
