@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Loading, Message } from 'element-ui';
 // import { start } from 'repl';
 
-let lodding;
+let loading;
 function startLoading () {
   loading = Loading.service({
     lock: true,
