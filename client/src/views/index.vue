@@ -1,6 +1,7 @@
 <template>
   <div class="index">
     <head-nav></head-nav>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -13,3 +14,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.index {
+  width: 100%;
+  height: 754px;
+  overflow: hidden;
+}
+</style>

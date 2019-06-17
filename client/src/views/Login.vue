@@ -71,7 +71,8 @@ export default {
                   this.$message({
                     message: '登录成功',
                     type: 'success'
-                  })
+                  }
+                  )
                 const {token} = res.data;
                 // 存储到localstorage
                 localStorage.setItem('Token', token)
@@ -81,6 +82,11 @@ export default {
                 this.$store.dispatch('setAuthenticated', !this.isEmpty(decoded))
                 this.$store.dispatch('setUser', decoded)
                 this.$router.push('/index')
+              }, err => {
+                this.$message({
+                  message: '账号或者密码错误',
+                  type: 'error'
+                })
               })
           }
         });

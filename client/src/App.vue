@@ -9,7 +9,7 @@ import jwtDecode from 'jwt-decode'
 export default {
   name: 'App',
   components: {},
-  created() {
+  created () {
     // 在根组件中使用vuex存储token
     const decoded = jwtDecode(localStorage.Token)
     this.$store.dispatch('setAuthenticated', !this.isEmpty(decoded))

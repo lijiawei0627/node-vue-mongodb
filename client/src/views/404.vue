@@ -7,10 +7,11 @@
 <style lang="stylus" scoped>
 .nofound
   width: 100%
-  height: 753px
-  overflow hidden
+  height: 100%
+  overflow: hidden
   img 
     width: 100%
-    height: 100%
+    height: 753px
     background-size: cover
+    overflow: hidden
 </style>

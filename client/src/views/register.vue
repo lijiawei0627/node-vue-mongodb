@@ -20,8 +20,8 @@
 
           <el-form-item label="选择身份">
             <el-select v-model="registerUser.identity" placeholder="请选择身份">
-              <el-option label="管理员" value="manager"></el-option>
-              <el-option label="员工" value="employee"></el-option>
+              <el-option label="管理员" value="管理员"></el-option>
+              <el-option label="员工" value="员工"></el-option>
             </el-select>
           </el-form-item>
 
@@ -51,7 +51,8 @@ export default {
         name: '',
         email: '',
         password: '',
-        password2: ''
+        password2: '',
+        identity: ''
       },
       // 定义规则
       rules: {

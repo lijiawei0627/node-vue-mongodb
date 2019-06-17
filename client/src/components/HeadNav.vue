@@ -7,10 +7,10 @@
       </el-col>
       <el-col :span="6" class="user">
         <div class="userinfo">
-          <img src="https://www.gravatar.com/avatar/5463c51f76cdf12f7ef3790e16c278d8?s=200&r=pg&d=mm" alt="">
+          <img :src="user.avatar" alt="">
           <div class="welcome">
             <div class="name comename">欢迎</div>
-            <div class="name avatarname">米斯特李</div>
+            <div class="name avatarname">{{user.name}}</div>
           </div>
           <span class="username">
             <el-dropdown trigger="click" @command="setDialogInfo">
@@ -30,14 +30,42 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
-  name: 'HeadNav'
+  name: 'HeadNav',
+  computed: {
+    ...mapGetters(['user'])
+  },
+  methods: {
+    setDialogInfo (cmdItem) {
+      // console.log(cmdItem)
+      switch (cmdItem) {
+        case 'info': 
+        this.showInfoList()
+        break;
+        case 'logout': 
+        this.logout()
+        break;
+      }
+    },
+    showInfoList () {
+      this.$router.push('/infoshow')
+    },
+    logout () {
+      // 清除token
+      localStorage.removeItem('Token')
+      // 设置vuex store
+      this.$store.dispatch('clearCurrentState')
+      // 跳转
+      this.$router.push('/login')
+    }
+  },
 }
 </script>
 
 <style lang="stylus" scoped>
 .head-nav
-  width: 100%
+  width: 99.35%
   height: 60px
   min-width: 600px
   padding: 5px
@@ -73,7 +101,7 @@ export default {
       img 
         position: absolute
         top: 0
-        right: 80px
+        right: 88px
         width: 40px
         height: 40px
         border-radius: 50%
@@ -90,8 +118,9 @@ export default {
           height: 20px
           margin-top: -8px
         .avatarname
-          width: 45px
+          width: 56px
           height: 20px
+          color: #409EFF
       .username
         position: absolute
         right: 10px
