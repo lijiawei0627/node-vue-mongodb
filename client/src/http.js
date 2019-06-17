@@ -31,7 +31,7 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(response => {
   endLoading()
   // 错误提醒
-  Message.error(error.response.data)
+  // Message.error(response.data.error)
 
   // 获取错误状态码
   const {status} = response.data
