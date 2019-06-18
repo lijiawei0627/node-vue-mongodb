@@ -65,11 +65,9 @@ export default {
   float: left;
   width: 15%;
   height: 100%;
-  opacity: 1;
 }
 .wrapper .menu-page{
   height: 100%;
-  opacity: 1;
 }
 .wrapper .menu-page .el-menu-vertical-demo{
   height: 683px;

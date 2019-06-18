@@ -17,7 +17,7 @@ export default {
 .home {
   background-color: #324057;
   padding-left: 15%;
-  width: 100%;
+  width: 85%;
   height: 100%;
   background-image: url('../assets/index.jpg');
   background-size: cover
