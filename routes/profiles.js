@@ -9,7 +9,9 @@ const profiles = require('../models/Profile');
 // })
 
 router.post('/add', passport.authenticate('jwt', {session: false}), (req, res) => {
+  console.log(req.body)
   profiles.create(req.body).then((profile) => {
+    console.log(profile)
     res.json(profile)
   })
 })

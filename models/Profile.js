@@ -9,7 +9,7 @@ mongoose.connect('mongodb://localhost:27017/management', {useNewUrlParser:true, 
 
 const ProfileSchema = new Schema({
   type: {
-    String
+    type: String
   },
   describe: {
     type: String
