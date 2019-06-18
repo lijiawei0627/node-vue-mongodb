@@ -64,7 +64,7 @@ export default {
      submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$axios.post('http://localhost:5000/api/users/login', this.loginUser)
+            this.$axios.post('/api/users/login', this.loginUser)
               .then(res => {
                 console.log(res)
                 // 消息提醒
@@ -78,8 +78,11 @@ export default {
                 localStorage.setItem('Token', token)
                 // 解析token
                 const decoded = jwtDecode(token)
-                // token存储到vuex中
+                // 得到token状态
                 this.$store.dispatch('setAuthenticated', !this.isEmpty(decoded))
+                
+                // 解析token后得到id， name，avatar，identity
+                // token存储到vuex中
                 this.$store.dispatch('setUser', decoded)
                 this.$router.push('/index')
               }, err => {
