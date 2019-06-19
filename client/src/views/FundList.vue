@@ -88,7 +88,7 @@
       </template>
     </el-table-column>
     </el-table>
-    <dia-log :dialog="dialog"></dia-log>
+    <dia-log :dialog="dialog" @changeShow="changeShow"></dia-log>
   </div>
 </template>
 
@@ -111,6 +111,10 @@ export default {
     this.getData();
   },
   methods: {
+    changeShow (show) {
+      console.log(show)
+      this.dialog.show = show;
+    },
     getData () {
       this.$axios.get('/api/profiles')
         .then((res) => {

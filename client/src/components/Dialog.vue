@@ -26,7 +26,7 @@
             <el-input type="text" v-model="formData.remark"></el-input>
           </el-form-item>
           <el-form-item class="text_right">
-            <el-button @click="dialog.show=false">取消</el-button>
+            <el-button @click="cancel">取消</el-button>
             <el-button type="primary" @click="submit('form')">提交</el-button>
           </el-form-item>
         </el-form>
@@ -48,11 +48,17 @@ export default {
           this.$axios.post('/api/profiles/add', this.formData)
             .then((res) => {
               console.log(res) 
+              this.formData = {}
+              this.$emit('changeShow', false)
             }).catch((err) => {
               console.log(err)
             });
         }
       })
+    },
+    cancel () {
+      this.dialog.show=false;
+      this.formData ={}
     }
   },
   data() {
