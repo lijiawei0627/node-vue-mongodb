@@ -5,25 +5,25 @@
     <div class="form">
       <el-form :model="formData" :rules="rules" ref="form" label-width="120px" style="margin: 10px;width: auto">
         
-          <el-form-item label="收支类型">
-            <el-select v-model="formData.type" placeholder="收支类型">
+          <el-form-item label="性别">
+            <el-select v-model="formData.sex" placeholder="性别">
               <el-option v-for="(formType, index) in this.format_type_list" :value="formType" :label="formType" :key="index"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="收支描述" prop="describe">
-            <el-input type="text" v-model="formData.describe"></el-input>
+          <el-form-item label="姓名" prop="name">
+            <el-input type="text" v-model="formData.name"></el-input>
           </el-form-item>
-          <el-form-item label="收入" prop="income">
-            <el-input type="number" v-model="formData.income"></el-input>
+          <el-form-item label="学号" prop="num">
+            <el-input type="number" v-model="formData.num"></el-input>
           </el-form-item>
-          <el-form-item label="支出" prop="expend">
-            <el-input type="number" v-model="formData.expend"></el-input>
+          <el-form-item label="专业" prop="major">
+            <el-input v-model="formData.major"></el-input>
           </el-form-item>
-          <el-form-item label="账户现金" prop="cash">
-            <el-input type="number" v-model="formData.cash"></el-input>
+          <el-form-item label="年级" prop="grade">
+            <el-input v-model="formData.grade"></el-input>
           </el-form-item>
-          <el-form-item label="备注" prop="remark">
-            <el-input type="text" v-model="formData.remark"></el-input>
+          <el-form-item label="出生年月" prop="year">
+            <el-input type="text" v-model="formData.year"></el-input>
           </el-form-item>
           <el-form-item class="text_right">
             <el-button @click="cancel">取消</el-button>
@@ -41,6 +41,7 @@ export default {
   props: {
     dialog: {}
   },
+  inject: ["reload"],
   methods: {
     submit (form) {
       this.$refs[form].validate(valid => {
@@ -48,8 +49,10 @@ export default {
           this.$axios.post('/api/profiles/add', this.formData)
             .then((res) => {
               console.log(res) 
+              // 清空数据，并关闭弹窗
               this.formData = {}
               this.$emit('changeShow', false)
+              this.reload()
             }).catch((err) => {
               console.log(err)
             });
@@ -57,6 +60,7 @@ export default {
       })
     },
     cancel () {
+      // 点击取消时，关闭弹窗，并清空数据
       this.dialog.show=false;
       this.formData ={}
     }
@@ -65,24 +69,23 @@ export default {
     return {
       formData: {
         type: '',
-        describe: '',
-        income: '',
-        expend: '',
-        cash: '',
-        remark: '',
+        name: '',
+        major: '',
+        grade: '',
+        year: '',
+        num: '',
         id: ''
       },
       rules: {
-        describe: [{required: true, message: '收支描述不能为空', trigger: 'blur' }],
-        remark: [{required: true, message: '备注不能为空', trigger: 'blur' }],
-        income: [{required: true, message: '收入不能为空', trigger: 'blur' }],
-        expend: [{required: true, message: '支出不能为空', trigger: 'blur' }],
-        cash: [{required: true, message: '账户现金不能为空', trigger: 'blur' }]
+        name: [{required: true, message: '姓名不能为空', trigger: 'blur' }],
+        num: [{required: true, message: '学号不能为空', trigger: 'blur' }],
+        major: [{required: true, message: '专业不能为空', trigger: 'blur' }],
+        grade: [{required: true, message: '年级不能为空', trigger: 'blur' }],
+        year: [{required: true, message: '出生年月不能为空', trigger: 'blur' }]
       },
       format_type_list: [
-        '提现',
-        '优惠券',
-        '充值'
+        '男',
+        '女'
       ]
     }
   },

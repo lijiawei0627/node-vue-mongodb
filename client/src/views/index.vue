@@ -2,7 +2,7 @@
   <div class="index">
     <head-nav></head-nav>
     <left-nav></left-nav>
-    <router-view></router-view>
+    <router-view v-if="IsRouteAlive"></router-view>
   </div>
 </template>
 
@@ -14,6 +14,24 @@ export default {
   components: {
     HeadNav,
     LeftNav
+  },
+  provide () {
+    return {
+      reload: this.reload
+    }
+  },
+  data() {
+    return {
+      IsRouteAlive: true
+    }
+  },
+  methods: {
+    reload () {
+      this.IsRouteAlive = false;
+      this.$nextTick (() => {
+        this.IsRouteAlive = true
+      })
+    } 
   }
 }
 </script>

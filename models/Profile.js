@@ -8,25 +8,27 @@ mongoose.connect('mongodb://localhost:27017/management', {useNewUrlParser:true, 
   })
 
 const ProfileSchema = new Schema({
-  type: {
-    type: String
-  },
-  describe: {
-    type: String
-  },
-  income: {
+  name: {
     type: String,
     required: true
   },
-  expend: {
+  num: {
     type: String,
     required: true
   },
-  cash: {
+  major: {
     type: String,
     required: true
   },
-  remark: {
+  grade: {
+    type: String,
+    required: true
+  },
+  sex: {
+    type: String,
+    required: true
+  },
+  year: {
     type: String
   },
   date: {

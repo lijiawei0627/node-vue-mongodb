@@ -29,43 +29,45 @@
       </template>
     </el-table-column>
     <el-table-column
-      prop="type"
-      label="收支类型"
-      width="120"
+      prop="sex"
+      align="center"
+      label="性别"
+      width="70"
       >
     </el-table-column>
     <el-table-column
-      prop="describe"
-      label="收支描述"
-      width="120">
+      prop="name"
+      label="姓名"
+      align="center"
+      width="100">
     </el-table-column>
     <el-table-column
-      prop="income"
-      label="收入"
-      width="120">
+      prop="num"
+      label="学号"
+      width="155">
       <template slot-scope="scope">
-        <span style="margin-left: 10px;color: #00d053">{{scope.row.income}}</span>
+        <span style="margin-left: 10px;color: #00d053">{{scope.row.num}}</span>
       </template>
     </el-table-column>
     <el-table-column
-      prop="expend"
-      label="支出"
-      width="120">
+      prop="major"
+      label="专业"
+      width="155">
       <template slot-scope="scope">
-        <span style="margin-left: 10px;color: #f56767">{{scope.row.expend}}</span>
+        <span style="margin-left: 10px;color: #f56767">{{scope.row.major}}</span>
       </template>
     </el-table-column>
     <el-table-column
-      prop="cash"
-      label="账户现金"
+      prop="grade"
+      label="年级"
       width="120">
       <template slot-scope="scope">
-        <span style="margin-left: 10px;color: #4db3ff">{{scope.row.cash}}</span>
+        <span style="margin-left: 10px;color: #4db3ff">{{scope.row.grade}}</span>
       </template>
     </el-table-column>
     <el-table-column
-      prop="remark"
-      label="备注"
+      prop="year"
+      label="出生年月"
       width="150">
     </el-table-column>
     <el-table-column label="操作"
