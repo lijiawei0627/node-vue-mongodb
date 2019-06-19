@@ -132,7 +132,8 @@ export default {
       console.log('123')
     },
     handleDelete (index, row) {
-      console.log('456')
+      console.log(index)
+      console.log(row)
     },
     handleAdd () {
       this.dialog.show = true

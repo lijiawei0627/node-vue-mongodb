@@ -1,6 +1,6 @@
 <template>
   <div class="dialog">
-    <el-dialog title="添加资金信息" :visible.sync="dialog.show" :close-on-click-modal="false"
+    <el-dialog title="添加学生信息" :visible.sync="dialog.show" :close-on-click-modal="false"
     >
     <div class="form">
       <el-form :model="formData" :rules="rules" ref="form" label-width="120px" style="margin: 10px;width: auto">
@@ -22,9 +22,17 @@
           <el-form-item label="年级" prop="grade">
             <el-input v-model="formData.grade"></el-input>
           </el-form-item>
-          <el-form-item label="出生年月" prop="year">
-            <el-input type="text" v-model="formData.year"></el-input>
-          </el-form-item>
+          <div class="wrap">
+            <span>出生年月日</span>
+            <el-date-picker
+            class="year"
+            v-model="formData.year"
+            type="date"
+            placeholder="选择日期"
+            format="yyyy 年 MM 月 dd 日"
+            value-format="yyyy-MM-dd">
+            </el-date-picker>
+          </div>
           <el-form-item class="text_right">
             <el-button @click="cancel">取消</el-button>
             <el-button type="primary" @click="submit('form')">提交</el-button>
@@ -52,6 +60,7 @@ export default {
               // 清空数据，并关闭弹窗
               this.formData = {}
               this.$emit('changeShow', false)
+              // 刷新当前页面
               this.reload()
             }).catch((err) => {
               console.log(err)
@@ -91,3 +100,15 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.wrap{
+  margin-left: 39px;
+}
+.wrap .year{
+  margin-left: 10px
+}
+.text_right{
+  margin-top: 17px;
+}
+</style>

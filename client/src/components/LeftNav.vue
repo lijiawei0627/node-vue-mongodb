@@ -40,15 +40,15 @@ export default {
       items: [
         {
         icon: 'el-icon-coin',
-        name: '资金管理',
+        name: '信息管理',
         path: 'fund',
         children: [
-          {path: 'fundlist', name: '资金流水'}
+          {path: 'fundlist', name: '学生信息'}
         ]
       },
       {
         icon: 'el-icon-s-check',
-        name: '信息管理',
+        name: '个人中心',
         path: 'info',
         children: [
           {path: 'infoshow', name: '个人信息'}

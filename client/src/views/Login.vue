@@ -2,7 +2,7 @@
   <div class="login">
     <section class="form_container">
       <div class="manage_tip">
-        <span class="title">米修在线后台管理系统</span>
+        <span class="title">学生信息在线后台管理系统</span>
         <!-- :rules校验 -->
         <el-form :model="loginUser" :rules="rules" ref="loginForm" label-width="100px" class="loginForm">
           <el-form-item label="邮箱" prop="email">

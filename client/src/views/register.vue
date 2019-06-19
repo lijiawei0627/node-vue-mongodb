@@ -2,7 +2,7 @@
   <div class="register">
     <section class="form_container">
       <div class="manage_tip">
-        <span class="title">米修在线后台管理系统</span>
+        <span class="title">学生信息在线后台管理系统</span>
         <!-- :rules校验 -->
         <el-form :model="registerUser" :rules="rules" ref="registerForm" label-width="100px" class="registerForm">
           <el-form-item label="用户名" prop="name">

@@ -14,7 +14,7 @@
           </div>
           <div class="user-item">
             <i class="el-icon-s-tools"></i>
-            <span>{{user.identity == 'manager'? '管理员': '员工'}}</span>
+            <span>{{user.identity == 'manager'? '管理员': '学生'}}</span>
           </div>
         </div>
       </el-col>
