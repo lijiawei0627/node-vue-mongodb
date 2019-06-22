@@ -90,7 +90,7 @@
       </template>
     </el-table-column>
     </el-table>
-    <dia-log :dialog="dialog" @changeShow="changeShow"></dia-log>
+    <dia-log :dialog="dialog" @changeShow="changeShow" :formData="formData"></dia-log>
   </div>
 </template>
 
@@ -101,11 +101,23 @@ export default {
   components: {
     DiaLog
   },
+  inject: ["reload"],
   data() {
     return {
       tableData: [],
+      formData: {
+        type: '',
+        name: '',
+        major: '',
+        grade: '',
+        year: '',
+        num: '',
+        id: ''
+      },
       dialog: {
-        show: false
+        show: false,
+        title: '添加学生信息',
+        option: 'edit'
       }
     }
   },
@@ -116,6 +128,7 @@ export default {
     changeShow (show) {
       console.log(show)
       this.dialog.show = show;
+      this.formData = {}
     },
     getData () {
       this.$axios.get('/api/profiles')
@@ -129,13 +142,41 @@ export default {
         })
     },
     handleEdit (index, row) {
-      console.log('123')
+      // 编辑
+      this.dialog = {
+        show: true,
+        title: "修改学生信息",
+        option: 'edit'
+      }
+      this.formData = {
+        sex: row.sex,
+        name: row.name,
+        num: row.num,
+        major: row.major,
+        grade: row.grade,
+        year: row.year,
+        id: row._id
+      }
     },
     handleDelete (index, row) {
-      console.log(index)
-      console.log(row)
+      console.log(row._id)
+      this.$axios.post(`/api/profiles/delete/${row._id}`)
+        .then(res => {
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
+          // 页面无闪烁刷新
+          this.reload()
+        })
     },
     handleAdd () {
+      this.dialog = {
+        show: 'true',
+        title: '添加学生信息',
+        option: 'add'
+      }
+      this.formData = {}
       this.dialog.show = true
     }
   }

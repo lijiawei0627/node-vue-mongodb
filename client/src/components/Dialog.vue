@@ -1,6 +1,6 @@
 <template>
   <div class="dialog">
-    <el-dialog title="添加学生信息" :visible.sync="dialog.show" :close-on-click-modal="false"
+    <el-dialog :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal="false"
     >
     <div class="form">
       <el-form :model="formData" :rules="rules" ref="form" label-width="120px" style="margin: 10px;width: auto">
@@ -47,18 +47,20 @@
 export default {
   name: 'DiaLog',
   props: {
-    dialog: {}
+    dialog: Object,
+    formData: Object
   },
   inject: ["reload"],
   methods: {
     submit (form) {
       this.$refs[form].validate(valid => {
         if (valid) {
-          this.$axios.post('/api/profiles/add', this.formData)
+          const url = this.dialog.option === 'add'? 'add' : `edit/${this.formData.id}`
+          console.log(url)
+          this.$axios.post(`/api/profiles/${url}`, this.formData)
             .then((res) => {
               console.log(res) 
               // 清空数据，并关闭弹窗
-              this.formData = {}
               this.$emit('changeShow', false)
               // 刷新当前页面
               this.reload()
@@ -70,21 +72,11 @@ export default {
     },
     cancel () {
       // 点击取消时，关闭弹窗，并清空数据
-      this.dialog.show=false;
-      this.formData ={}
+      this.$emit('changeShow', false)
     }
   },
   data() {
     return {
-      formData: {
-        type: '',
-        name: '',
-        major: '',
-        grade: '',
-        year: '',
-        num: '',
-        id: ''
-      },
       rules: {
         name: [{required: true, message: '姓名不能为空', trigger: 'blur' }],
         num: [{required: true, message: '学号不能为空', trigger: 'blur' }],
