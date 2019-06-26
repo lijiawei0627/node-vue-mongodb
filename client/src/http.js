@@ -37,7 +37,10 @@ axios.interceptors.response.use(response => {
   const {status} = response.data
   
   if (status == 401) {
-    Message.error('token失效，请重新登录')
+    this.$message({
+      type: 'warning',
+      message: 'Token失效，请重新登录'
+    })
     //  清除Token
     localStorage.removeItem('Token')
 

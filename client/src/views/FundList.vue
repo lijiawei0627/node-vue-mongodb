@@ -2,6 +2,21 @@
   <div class="wrapper">
     <div class="btn">
       <el-form :inline="true" ref="add_data">
+        <el-form-item label="按照时间筛选" class="date" :model="searchDate">
+          <el-date-picker
+            v-model="searchDate.startTime"
+            type="datetime"
+            placeholder="选择开始时间">
+          </el-date-picker>
+          --
+          <el-date-picker
+            v-model="searchDate.endTime"
+            type="datetime"
+            class="over"
+            placeholder="选择结束时间">
+          </el-date-picker>
+          <el-button type="primary" size="small" icon="search" @click="handleSearch">筛选</el-button>
+        </el-form-item>
         <el-form-item class="btnRight">
           <el-button type="primary" size="small" icon="view" @click="handleAdd">添加</el-button>
         </el-form-item>
@@ -21,6 +36,7 @@
     </el-table-column>
     <el-table-column
       prop="date"
+      align="center"
       label="创建时间"
       width="250">
       <template slot-scope="scope">
@@ -119,6 +135,10 @@ export default {
   inject: ["reload"],
   data() {
     return {
+      searchDate: {
+        startTime: '',
+        endTime: ''
+      },
       paginations: {
         page_index: 1,  // 当前位于哪页
         total: 0, // 总数
@@ -128,6 +148,7 @@ export default {
       },
       tableData: [],
       allTableData: [],
+      filterTableData: [],
       formData: {
         type: '',
         name: '',
@@ -148,6 +169,27 @@ export default {
     this.getData();
   },
   methods: {
+    handleSearch () {
+      if (!this.searchDate.startTime || !this.searchDate.endTime) {
+        this.$message({
+          type: 'warning',
+          message: '请选择时间区间'
+        })
+        this.getData();
+        return
+      } else {
+        const sTime = this.searchDate.startTime.getTime();
+        const eTime = this.searchDate.endTime.getTime();
+        this.allTableData = this.filterTableData.filter((item, index) => {
+          let date = new Date(item.date);
+          let time = date.getTime()
+          console.log(`${sTime}--${time}--${eTime}`)
+          // 返回符合时间条件的数据
+          return time>=sTime&&time<=eTime
+        })
+        this.setPaginations()
+      }
+    },
     handleSizeChange (page_size) {
       // 切换page_size,选择每页显示多少条数据
       this.paginations.page_index = 1;
@@ -183,6 +225,7 @@ export default {
           console.log(res)
           console.log(res.data)
           this.allTableData = res.data;
+          this.filterTableData = res.data;
           console.log(res.data)
           // 设置分页功能
           this.setPaginations();
@@ -247,8 +290,16 @@ export default {
 .wrapper{
   padding: 15px;
 }
-.wrapper .btn{
-  float: right;
+.wrapper .btn .date {
+  margin-left: 10px;
+}
+.wrapper .btn .date .over {
+  /* margin-left: 10px; */
+  margin-right: 10px;
+}
+.wrapper .btn .btnRight {
+  position: absolute;
+  right: 7px;
 }
 .pagination {
   position: absolute;
