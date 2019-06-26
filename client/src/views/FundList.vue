@@ -18,7 +18,12 @@
           <el-button type="primary" size="small" icon="search" @click="handleSearch">筛选</el-button>
         </el-form-item>
         <el-form-item class="btnRight">
-          <el-button type="primary" size="small" icon="view" @click="handleAdd">添加</el-button>
+          <el-button 
+          type="primary" 
+          size="small" 
+          icon="view" 
+          v-if="user.identity == '管理员'"
+          @click="handleAdd">添加</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -97,11 +102,13 @@
           size="small"
           type="warning"
           icon="edit"
+          v-if="user.identity == '管理员'"
           @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
         <el-button
           icon="delete"
           size="small"
           type="danger"
+          v-if="user.identity == '管理员'"
           @click="handleDelete(scope.$index, scope.row)">删除</el-button>
       </template>
     </el-table-column>
@@ -127,12 +134,16 @@
 
 <script>
 import DiaLog from '../components/Dialog'
+import {mapGetters} from 'vuex'
 export default {
   name: 'FundList',
   components: {
     DiaLog
   },
   inject: ["reload"],
+  computed: {
+    ...mapGetters(['user'])
+  },
   data() {
     return {
       searchDate: {
