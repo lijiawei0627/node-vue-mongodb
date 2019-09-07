@@ -73,10 +73,12 @@
         </el-upload>
         </el-col>
     </el-row>
+    <edit-info @changeShow="changeShow" :dialog='dialog' :formData='formData'></edit-info>
   </div>
 </template>
 
 <script>
+import EditInfo from '../components/EditInfo'
 import { mapGetters } from 'vuex'
   export default {
     data() {
@@ -97,8 +99,27 @@ import { mapGetters } from 'vuex'
         query: {
           id: ''
         },
-        imageUrl: ''
+        imageUrl: '',
+        dialog: {
+          show: true
+        },
+        formData: {
+          name: '',
+          gender: '男',
+          age: '',
+          id: '',
+          class: '',
+          beforeName: '',
+          grade: '',
+          year: '',
+          face: '',
+          addr: '',
+          major: ''
+        }
       }
+    },
+    components: {
+      EditInfo
     },
     computed: {
     ...mapGetters(['user'])
@@ -116,6 +137,8 @@ import { mapGetters } from 'vuex'
       beforeAvatarUpload () {
 
       },
+      changeShow () {
+      },
       getData () {
         this.$axios.post('/api/info', {id: this.user.id})
           .then((res) => {
@@ -126,7 +149,7 @@ import { mapGetters } from 'vuex'
   }
 </script>
 
-<style scope>
+<style scoped>
 .info{
   margin-left: 15%;
   border: 1px solid black;

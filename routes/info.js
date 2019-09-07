@@ -15,6 +15,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     .then((res) => {
       console.log(res)
     })
+    res.json('hello, world')
 })
 
 
