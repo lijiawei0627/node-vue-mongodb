@@ -38,6 +38,9 @@
       <el-form-item label="班级" prop="class" class="list">
         <el-input type="text" v-model="information.class" auto-complete="off"></el-input>
       </el-form-item>
+      <el-form-item label="专业" prop="major" class="list">
+        <el-input type="text" v-model="information.major" auto-complete="off"></el-input>
+      </el-form-item>
             <el-form-item label="政治面貌" class="list">
         <el-select v-model="information.face" placeholder="请选择身份">
           <el-option label="共青团员" value="共青团员"></el-option>
@@ -74,6 +77,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
   export default {
     data() {
       return {
@@ -87,13 +91,20 @@
           grade: '',
           year: '',
           face: '',
-          addr: ''
+          addr: '',
+          major: ''
         },
         query: {
           id: ''
         },
         imageUrl: ''
       }
+    },
+    computed: {
+    ...mapGetters(['user'])
+    },
+    created() {
+      this.getData();
     },
     methods: {
       onSubmit () {
@@ -104,6 +115,12 @@
       },
       beforeAvatarUpload () {
 
+      },
+      getData () {
+        this.$axios.post('/api/info', {id: this.user.id})
+          .then((res) => {
+            console.log(this.user.id)
+          })
       }
     }
   }
