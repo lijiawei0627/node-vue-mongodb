@@ -30,6 +30,10 @@ const UserName = new Schema({
   identity: {
     type: String,
     required: true
+  },
+  icon: {
+    type: String,
+    default: 'undefind'
   }
 })
 

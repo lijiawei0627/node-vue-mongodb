@@ -83,6 +83,7 @@ export default {
                   
                   // 解析token后得到id， name，avatar，identity
                   // token存储到vuex中
+                  console.log(decoded);
                   this.$store.dispatch('setUser', decoded)
                   this.$router.push('/index')
                 } else {

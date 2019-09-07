@@ -57,7 +57,7 @@ router.post('/login', (req, res) => {
       console.log(password)
       if (data.password == password) {
         // token令牌验证
-        const rule = {id: data.id, name: data.name, avatar: data.avatar, identity: data.identity};
+        const rule = {id: data.id, name: data.name, avatar: data.avatar, identity: data.identity, icon: data.icon};
         jwt.sign(rule, 'secret', {expiresIn: 3600}, (err, token) => {
           if (err) throw err;
           res.json({
@@ -82,6 +82,23 @@ router.post('/login', (req, res) => {
   })
 })
 
+const multer = require('multer')
+const upload = multer({dest: __dirname + '/../uploads'})
+router.post('/updata',upload.single('file'), async (req, res) => {
+  // console.log(req.file);
+  console.log(req.body.id)
+  const file = req.file
+  file.url = `http://localhost:5000/uploads/${file.filename}`
+  User.findByIdAndUpdate(req.body.id,{icon: file.url}, function (err, ret) {
+  if(err) {
+    console.log('更新失败')
+    console.log('err')
+  }else {
+    console.log('更新成功')
+  }
+})
+  res.send(file)
+})
 // router.get('/current', '验证token', () => {})
 router.get('/current', passport.authenticate('jwt', {session: false}), (req, res) => {
   res.json({
