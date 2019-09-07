@@ -13,7 +13,7 @@
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
-            <img v-if="user.icon" :src="user.icon" class="avatar">
+            <img v-if="icon" :src="icon" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </div>
@@ -43,24 +43,29 @@ export default {
   },
   data() {
     return {
-      data: {}
+      icon: ''
     }
   },
   mounted() {
-    console.log(this.user)
+    this._initData();
   },
   methods: {
+    _initData () {
+      this.icon = localStorage.icon;
+    },
     handleAvatarSuccess(res, file) {
       this.$message({
         message: '上传成功',
         type: 'success'
       })
-      this.data = JSON.parse(JSON.stringify(this.user));
-      this.data.icon = URL.createObjectURL(file.raw);
-      console.log(this.data)
-      localStorage.user = this.data;
-      this.$store.dispatch('setUser', this.data)
-      console.log(this.user)
+      localStorage.setItem('icon', URL.createObjectURL(file.raw));
+      this._initData();
+      // this.data = JSON.parse(JSON.stringify(this.user));
+      // this.data.icon = URL.createObjectURL(file.raw);
+      // console.log(this.data)
+      // localStorage.user = this.data;
+      // this.$store.dispatch('setUser', this.data)
+      // console.log(this.user)
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg';

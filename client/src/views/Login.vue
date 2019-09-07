@@ -78,12 +78,14 @@ export default {
                   localStorage.setItem('Token', token)
                   // 解析token
                   const decoded = jwtDecode(token)
+                  // console.log(decoded);
+                  localStorage.setItem('icon', decoded.icon);
                   // 得到token状态
                   this.$store.dispatch('setAuthenticated', !this.isEmpty(decoded))
                   
                   // 解析token后得到id， name，avatar，identity
                   // token存储到vuex中
-                  console.log(decoded);
+                  // console.log(decoded);
                   this.$store.dispatch('setUser', decoded)
                   this.$router.push('/index')
                 } else {
