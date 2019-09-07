@@ -11,7 +11,7 @@
   overflow: hidden
   img 
     width: 100%
-    height: 753px
+    height: 100%
     background-size: cover
     overflow: hidden
 </style>

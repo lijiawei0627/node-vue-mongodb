@@ -21,7 +21,7 @@
                 <el-dropdown-item command="info" >个人信息</el-dropdown-item>
                 <el-dropdown-item command="logout" divided>退出</el-dropdown-item>
               </el-dropdown-menu>
-              </el-dropdown>
+            </el-dropdown>
           </span>
         </div>
       </el-col>

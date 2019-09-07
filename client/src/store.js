@@ -30,7 +30,7 @@ const mutations = {
       state.user = user
     } else {
       state.user = {}
-    }
+    } 
   }
 }
 const actions = {

@@ -62,7 +62,7 @@ export default {
               console.log(res) 
               // 清空数据，并关闭弹窗
               this.$emit('changeShow', false)
-              // 刷新当前页面
+              // 通过再次渲染页面来达到刷新当前页面的效果
               this.reload()
             }).catch((err) => {
               console.log(err)

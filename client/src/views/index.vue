@@ -39,7 +39,7 @@ export default {
 <style scoped>
 .index {
   width: 100%;
-  height: 754px;
+  height: 100%;
   overflow: hidden;
 }
 </style>

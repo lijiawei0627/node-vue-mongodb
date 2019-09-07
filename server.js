@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 
 app.use("/api/users", routes);
 app.use('/api/profiles', profiles)
-
+// app.use(express.static('./dist'));
 // passport初始化
 app.use(passport.initialize());
 

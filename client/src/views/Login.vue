@@ -66,28 +66,34 @@ export default {
           if (valid) {
             this.$axios.post('/api/users/login', this.loginUser)
               .then(res => {
-                console.log(res)
                 // 消息提醒
+                let data = res.data
+                if (data.success) {
                   this.$message({
                     message: '登录成功',
                     type: 'success'
-                  }
-                  )
-                const {token} = res.data;
-                // 存储到localstorage
-                localStorage.setItem('Token', token)
-                // 解析token
-                const decoded = jwtDecode(token)
-                // 得到token状态
-                this.$store.dispatch('setAuthenticated', !this.isEmpty(decoded))
-                
-                // 解析token后得到id， name，avatar，identity
-                // token存储到vuex中
-                this.$store.dispatch('setUser', decoded)
-                this.$router.push('/index')
+                  })
+                  const {token} = data;
+                  // 存储到localstorage
+                  localStorage.setItem('Token', token)
+                  // 解析token
+                  const decoded = jwtDecode(token)
+                  // 得到token状态
+                  this.$store.dispatch('setAuthenticated', !this.isEmpty(decoded))
+                  
+                  // 解析token后得到id， name，avatar，identity
+                  // token存储到vuex中
+                  this.$store.dispatch('setUser', decoded)
+                  this.$router.push('/index')
+                } else {
+                  this.$message({
+                    message: data.msg,
+                    type: 'error'
+                  })
+                }
               }, err => {
                 this.$message({
-                  message: '账号或者密码错误',
+                  message: '连接错误',
                   type: 'error'
                 })
               })
@@ -107,7 +113,7 @@ export default {
 .login
   position: relative
   width: 100%
-  height: 753px
+  height: 100%
   background: url(../assets/timg.jpg) no-repeat center center
   background-size: cover
   .form_container

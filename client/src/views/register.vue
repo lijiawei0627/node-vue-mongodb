@@ -113,12 +113,27 @@ export default {
           if (valid) {
             this.$axios.post('api/users/register', this.registerUser)
               .then(res => {
+                let data = res.data;
+                console.log(data)
                 // 注册成功
+                if (data.success) {
+                  this.$message({
+                    message: data.msg,
+                    type: 'success'
+                  })
+                  this.$router.push('/login');
+                } else {
+                  this.$message({
+                    message: data.msg,
+                    type: 'warning'
+                  })
+                }
+              })
+              .catch(() => {
                 this.$message({
-                  message: '账号注册成功',
-                  type: 'success'
+                  message: '请求失败，请重试',
+                  type: 'error'
                 })
-                this.$router.push('/login')
               })
           }
         });
@@ -131,7 +146,7 @@ export default {
 .register
   position: relative
   width: 100%
-  height: 753px
+  height: 100%
   background: url(../assets/timg.jpg) no-repeat center center
   background-size: cover
   .form_container

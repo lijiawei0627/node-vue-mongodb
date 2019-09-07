@@ -273,16 +273,27 @@ export default {
       }
     },
     handleDelete (index, row) {
-      console.log(row._id)
-      this.$axios.post(`/api/profiles/delete/${row._id}`)
-        .then(res => {
-          this.$message({
-            message: '删除成功',
-            type: 'success'
-          })
+      this.$confirm('此操作将永久删除该成员, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$axios.post(`/api/profiles/delete/${row._id}`)
+            .then(res => {
+              this.$message({
+                message: '删除成功',
+                type: 'success'
+              })
           // 页面无闪烁刷新
           this.reload()
         })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+      console.log(row._id)
     },
     handleAdd () {
       this.dialog = {

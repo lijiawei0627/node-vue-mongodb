@@ -17,7 +17,10 @@ router.post('/register', (req, res) => {
     if (err) throw err
     if (data) {
       console.log(data)
-      return res.status(404).json({email: '邮箱已被注册'})
+      return res.status(200).json({
+        success: false,
+        msg: '该账号已注册'
+      })
     } else {
       const avatar = gravatar.url(req.body.email, {s: '200', r: 'pg', d: 'mm'});
       const newUser = {
@@ -30,7 +33,10 @@ router.post('/register', (req, res) => {
       newUser.password = md5(newUser.password)
       User.create(newUser).then((data) => {
           // if (err) throw err;
-          return res.json(data)
+          return res.json({
+            success: true,
+            msg: '注册成功'
+          })
         }).catch((err) => {
           console.log(err)
         })
@@ -62,10 +68,16 @@ router.post('/login', (req, res) => {
         // jwt.sign('规则', '加密时间', '过期时间', '箭头函数')
         // return res.json('密码正确，登录成功')
       } else {
-        return res.status(400).json({password: '密码错误'})
+        return res.status(200).json({
+          msg: '密码错误',
+          success: false
+        })
       }
     } else {
-      return res.status(404).json({email: '用户不存在，请先注册'})
+      return res.status(200).json({
+        msg: '用户不存在，请先注册',
+        success: false
+      })
     }
   })
 })
