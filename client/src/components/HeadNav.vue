@@ -7,7 +7,7 @@
       </el-col>
       <el-col :span="6" class="user">
         <div class="userinfo">
-          <img :src="user.avatar" alt="">
+          <img :src="icon" alt="">
           <div class="welcome">
             <div class="name comename">欢迎</div>
             <div class="name avatarname">{{user.name}}</div>
@@ -36,7 +36,18 @@ export default {
   computed: {
     ...mapGetters(['user'])
   },
+  data() {
+    return {
+      icon: ''
+    }
+  },
+  mounted() {
+    this._initData();
+  },
   methods: {
+    _initData () {
+      this.icon = localStorage.icon;
+    },
     setDialogInfo (cmdItem) {
       // console.log(cmdItem)
       switch (cmdItem) {

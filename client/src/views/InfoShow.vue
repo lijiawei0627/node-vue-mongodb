@@ -2,10 +2,7 @@
   <div class="infoshow">
     <el-row type="flex" class="row-bg" justify="center">
       <el-col :span="8">
-        <div class="user" v-if = "user.identity == '管理员'">
-          <img :src="user.avatar" class="avatar" alt="">
-        </div>
-        <div v-else>
+        <div>
           <el-upload
             class="avatar-uploader"
             action="/api/users/updata"
@@ -91,6 +88,11 @@ export default {
     position: relative;
     overflow: hidden;
   }
+  .avatar-uploader {
+    width: 178px;
+    height: 178px;
+    margin: 31% auto;
+  }
   .avatar-uploader .el-upload:hover {
     border-color: #409EFF;
   }
@@ -106,7 +108,8 @@ export default {
   .avatar {
     width: 178px;
     height: 178px;
-    display: block;
+    /* display: block; */
+    border-radius: 50%;
   }
 .infoshow{
   height: 100%;
