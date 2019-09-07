@@ -49,8 +49,8 @@ axios.interceptors.response.use(response => {
   return response
 }, error => {
   endLoading();
-  Message.error(error.response.data)
-  return Promise.reject(error)
+  Message.error('Token失效，请重新登录')
+  // return Promise.reject(error)
 })
 
 export default axios

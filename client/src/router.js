@@ -19,7 +19,8 @@ const router = new Router({
         {path: '', component: () => import ('./views/Home.vue')},
         {path: '/home', name: 'Home', component: () => import ('./views/Home.vue')},
         {path: '/infoshow', name: 'Infoshow', component: () => import ('./views/InfoShow.vue')},
-        {path: '/fundlist', name: 'FundList', component: () => import ('./views/FundList.vue')}
+        {path: '/fundlist', name: 'FundList', component: () => import ('./views/FundList.vue')},
+        {path: '/management', name: 'Management', component: () => import('./views/management.vue')}
       ]
     },
     {

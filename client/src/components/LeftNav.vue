@@ -43,7 +43,8 @@ export default {
         name: '信息管理',
         path: 'fund',
         children: [
-          {path: 'fundlist', name: '学生信息'}
+          {path: 'fundlist', name: '学生信息'},
+          {path: 'management', name: '学籍管理'}
         ]
       },
       {

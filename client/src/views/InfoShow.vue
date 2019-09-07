@@ -89,9 +89,11 @@ export default {
     overflow: hidden;
   }
   .avatar-uploader {
+    position: absolute;
     width: 178px;
     height: 178px;
-    margin: 31% auto;
+    margin: 0 10%;
+    top: 30%;
   }
   .avatar-uploader .el-upload:hover {
     border-color: #409EFF;
