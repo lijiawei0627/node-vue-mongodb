@@ -71,7 +71,8 @@
         </el-row>
           <el-form-item class="text_right">
             <el-button @click="cancel">取消</el-button>
-            <el-button type="primary" @click="submit('form')">提交</el-button>
+            <el-button type="primary" @click="submit('infoForm')">提交</el-button>
+            <el-button @click="resetForm('infoForm')">重置</el-button>
           </el-form-item>
         </el-form>
     </div>
@@ -107,6 +108,9 @@ export default {
     ...mapGetters(['user'])
   },
   methods: {
+    resetForm (formName) {
+     this.$refs[formName].resetFields();
+    },
     submit (form) {
       this.$refs[form].validate(valid => {
         if (valid) {

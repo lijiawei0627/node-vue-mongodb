@@ -60,6 +60,25 @@ router.post('/edit', passport.authenticate('jwt', {session: false}), (req, res) 
   })
 })
 
+router.post('/query', passport.authenticate('jwt', {session: false}), (req, res) => {
+  console.log(req.body.id)
+  info.findOne({num: req.body.id}, (err, adventure) => {
+    if (err) {
+      res.json({
+        error: true,
+        msg: '请求错误'
+      })
+    } else if (adventure) {
+      res.json(adventure)
+    } else {
+      res.json({
+        error: true,
+        msg: '无该学生信息'
+      })
+    }
+  })
+})
+
 const multer = require('multer')
 const upload = multer({dest: __dirname + '/../uploads'})
 router.post('/updata',upload.single('file'), async (req, res) => {

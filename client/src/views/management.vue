@@ -6,7 +6,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">查询</el-button>
-         <el-button type="primary" @click="onEdit">{{ this.dialog.button }}</el-button>
+        <el-button type="primary" @click="onEdit">{{ this.dialog.button }}</el-button>
       </el-form-item>
     </el-form>
     <el-row class="info">
@@ -132,7 +132,18 @@ import { mapGetters } from 'vuex'
     },
     methods: {
       onSubmit () {
-        console.log('submit!');
+        if (this.user.identity === '管理员') {
+          console.log(this.user)
+          this.$axios.post('/api/info/query', this.query)
+            .then((res) => {
+              this.information = res.data;
+            })
+        } else {
+          this.$axios({
+            type: 'warning',
+            message: '请使用管理员身份查询'
+          })
+        }
       },
       onEdit () {
         this.dialog.show = true;
