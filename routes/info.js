@@ -8,6 +8,7 @@ const info = require('../models/Information');
 //   res.json({msg: 'success'})
 // })
 
+// 获取个人信息
 router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
   console.log(req.body)
   info.findOne({id: req.body.id}, (err, adventure) => {
@@ -27,6 +28,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
   })
 })
 
+// 添加个人信息
 router.post('/add', passport.authenticate('jwt', {session: false}), (req, res) => {
   console.log('add')
   info.create(req.body).then((info) => {
@@ -38,6 +40,7 @@ router.post('/add', passport.authenticate('jwt', {session: false}), (req, res) =
   })
 })
 
+// 个人信息编辑
 router.post('/edit', passport.authenticate('jwt', {session: false}), (req, res) => {
   info.findOneAndUpdate({id: req.body.id}, req.body, (err, ret) => {
     console.log('edit')
@@ -60,6 +63,7 @@ router.post('/edit', passport.authenticate('jwt', {session: false}), (req, res) 
   })
 })
 
+// 个人信息查询
 router.post('/query', passport.authenticate('jwt', {session: false}), (req, res) => {
   console.log(req.body.id)
   info.findOne({num: req.body.id}, (err, adventure) => {
@@ -79,6 +83,7 @@ router.post('/query', passport.authenticate('jwt', {session: false}), (req, res)
   })
 })
 
+// 头像上传功能后端实现，并将图片保存到uploads文件夹
 const multer = require('multer')
 const upload = multer({dest: __dirname + '/../uploads'})
 router.post('/updata',upload.single('file'), async (req, res) => {

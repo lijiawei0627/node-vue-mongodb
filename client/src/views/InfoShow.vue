@@ -44,6 +44,7 @@ export default {
     }
   },
   mounted() {
+    // 组件挂载时，获取初始头像数据
     this._initData();
   },
   methods: {
@@ -55,7 +56,9 @@ export default {
         message: '上传成功',
         type: 'success'
       })
+      // 上传头像后，在本地localStorage上进行存储，以便使用
       localStorage.setItem('icon', URL.createObjectURL(file.raw));
+      // 再次刷新以便icon获取最新头像地址
       this._initData();
       // this.data = JSON.parse(JSON.stringify(this.user));
       // this.data.icon = URL.createObjectURL(file.raw);
@@ -65,6 +68,7 @@ export default {
       // console.log(this.user)
     },
     beforeAvatarUpload(file) {
+      // 上传图片校验
       const isJPG = file.type === 'image/jpeg';
       const isLt2M = file.size / 1024 / 1024 < 2;
 

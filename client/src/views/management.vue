@@ -85,6 +85,7 @@ import { mapGetters } from 'vuex'
   export default {
     data() {
       return {
+        // 表格内容数据
         information: {
           name: '',
           gender: '男',
@@ -100,10 +101,12 @@ import { mapGetters } from 'vuex'
         query: {
           id: ''
         },
+        // 控制弹窗
         dialog: {
           show: false,
           button: ''
         },
+        // 传递给弹窗数据
         formData: {
           name: '',
           gender: '男',
@@ -127,11 +130,14 @@ import { mapGetters } from 'vuex'
     ...mapGetters(['user'])
     },
     created() {
+      // 从后端获取初始information表格数据
       this.getData();
+      // 将个人id传递给弹窗数据formData
       this.formData.id = this.user.id;
     },
     methods: {
       onSubmit () {
+        // 添加管理员权限，禁止非管理员用户获取其他人的个人信息
         if (this.user.identity === '管理员') {
           console.log(this.user)
           this.$axios.post('/api/info/query', this.query)
@@ -145,20 +151,23 @@ import { mapGetters } from 'vuex'
           })
         }
       },
+      // 提供打开弹窗按钮功能
       onEdit () {
         this.dialog.show = true;
       },
-      _initData () {
-        this.imageUrl = localStorage.imageUrl;
-      },
+      // _initData () {
+      //   this.imageUrl = localStorage.imageUrl;
+      // },
       handleAvatarSuccess (res, file) {
         this.$message({
           message: '上传成功',
           type: 'success'
         })
+        // 获取到图片存储地址，以便前端展示
         this.information.imageUrl = URL.createObjectURL(file.raw);
+        // 将图片储存地址保存到localStorage本地，以防止刷新丢失地址信息，保持与后端数据同步
         localStorage.setItem('imageUrl', URL.createObjectURL(file.raw));
-        this._initData();
+        // this._initData();
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';
@@ -172,10 +181,12 @@ import { mapGetters } from 'vuex'
         }
         return isJPG && isLt2M;
       },
+      // 控制弹窗
       changeShow (changeData) {
         console.log(changeData)
         this.dialog.show = changeData;
       },
+      // 获取数据
       getData () {
         this.$axios.post('/api/info/', {id: this.user.id})
           .then((res) => {

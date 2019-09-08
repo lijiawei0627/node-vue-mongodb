@@ -109,9 +109,11 @@ export default {
     }
   },
   methods: {
+    // 重置注册信息
      resetForm (formName) {
        this.$refs[formName].resetFields();
      },
+    //  实现注册提交到后端功能
      submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {

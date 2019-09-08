@@ -26,6 +26,7 @@ export default {
     }
   },
   methods: {
+    // 父组件定义钩子，以便于子组件用来实现无闪烁刷新
     reload () {
       this.IsRouteAlive = false;
       this.$nextTick (() => {
