@@ -13,6 +13,8 @@ app.use(bodyParser.json());
 app.use("/api/users", routes);
 app.use('/api/profiles', profiles)
 app.use('/api/info', info)
+
+// 将用户上传的图片暴露出去，为应用程序提供静态文件
 app.use('/uploads', express.static(__dirname + '/uploads'))
 app.use(express.static('./dist'));
 // passport初始化
