@@ -14,7 +14,7 @@ app.use("/api/users", routes);
 app.use('/api/profiles', profiles)
 app.use('/api/info', info)
 app.use('/uploads', express.static(__dirname + '/uploads'))
-// app.use(express.static('./dist'));
+app.use(express.static('./dist'));
 // passport初始化
 app.use(passport.initialize());
 
