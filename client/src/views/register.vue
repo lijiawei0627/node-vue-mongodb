@@ -27,6 +27,7 @@
 
           <el-form-item>
             <el-button type="primary" class="submit_btn" @click="submitForm('registerForm')">注册</el-button>
+            <el-button @click="resetForm('registerForm')">重置</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -108,6 +109,9 @@ export default {
     }
   },
   methods: {
+     resetForm (formName) {
+       this.$refs[formName].resetFields();
+     },
      submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -171,5 +175,5 @@ export default {
         border-radius: 5px
         box-shadow: 0px 5px 10px #cccccc
         .submit_btn
-          width: 100%  
+          width: 50%  
 </style>

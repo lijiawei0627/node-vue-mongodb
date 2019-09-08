@@ -24,7 +24,7 @@ const InfoSchema = new Schema({
     type: String,
     required: true
   },
-  id: {
+  num: {
     type: Number,
     required: true
   },
@@ -37,10 +37,6 @@ const InfoSchema = new Schema({
     required: true
   },
   beforeName: {
-    type: Date,
-    default: Date.now
-  },
-  addr: {
     type: String,
     default: ''
   },
@@ -51,6 +47,14 @@ const InfoSchema = new Schema({
   class: {
     type: String,
     required: true
+  },
+  id: {
+    type: String,
+    default: ''
+  },
+  imageUrl: {
+    type: String,
+    default: ''
   }
 })
 

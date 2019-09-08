@@ -3,42 +3,42 @@
     <el-dialog :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal="false"
     >
     <div class="form">
-      <el-form :model="formData" :rules="rules" ref="form" label-width="120px" style="margin: 10px;width: auto">
+      <el-form :model="information" ref="form" label-width="120px" style="margin: 10px;width: auto">
         <el-row class="info">
           <el-col :span="20" class="table">
-            <el-form :model="formData" status-icon ref="infoForm" label-width="80px" class="demo-ruleForm">
+          <el-form :model="information" status-icon :rules="rules" ref="infoForm" label-width="80px" class="demo-ruleForm">
           <el-form-item label="姓名" prop="name" class="list">
-            <el-input type="text" v-model="formData.name" auto-complete="off"></el-input>
+            <el-input type="text" v-model="information.name" auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item label="性别" class="list">
-            <el-radio-group v-model="formData.gender">
+            <el-radio-group v-model="information.gender">
               <el-radio label="男"></el-radio>
               <el-radio label="女"></el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="年龄" prop="age" class="list">
-            <el-input v-model.number="formData.age"></el-input>
+            <el-input v-model.number="information.age"></el-input>
           </el-form-item>
           <!-- <div class="img">
             <img src="../assets/index.jpg" alt="">
           </div> -->
-          <el-form-item label="学号" prop="id" class="list">
-            <el-input type="number" v-model="formData.id" auto-complete="off"></el-input>
+          <el-form-item label="学号" prop="num" class="list">
+            <el-input type="number" v-model="information.num" auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item label="曾用名" prop="beforeName" class="list">
-            <el-input type="text" v-model="formData.beforeName" auto-complete="off"></el-input>
+            <el-input type="text" v-model="information.beforeName" auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item label="年级" prop="grade" class="list">
-            <el-input v-model.number="formData.grade"></el-input>
+            <el-input v-model.number="information.grade"></el-input>
           </el-form-item>
           <el-form-item label="班级" prop="class" class="list">
-            <el-input type="text" v-model="formData.class" auto-complete="off"></el-input>
+            <el-input type="text" v-model="information.class" auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item label="专业" prop="major" class="list">
-            <el-input type="text" v-model="formData.major" auto-complete="off"></el-input>
+            <el-input type="text" v-model="information.major" auto-complete="off"></el-input>
           </el-form-item>
-                <el-form-item label="政治面貌" class="list">
-            <el-select v-model="formData.face" placeholder="请选择身份">
+          <el-form-item label="政治面貌" class="list" prop="face">
+            <el-select v-model="information.face" placeholder="请选择身份">
               <el-option label="共青团员" value="共青团员"></el-option>
               <el-option label="共产党员" value="共产党员"></el-option>
               <el-option label="群众" value="群众"></el-option>
@@ -48,7 +48,7 @@
           <div class="list">
             <el-date-picker
             class="date"
-            v-model="formData.year"
+            v-model="information.year"
             type="date"
             placeholder="选择日期"
             format="yyyy 年 MM 月 dd 日"
@@ -60,11 +60,11 @@
           <el-col :span="4" class="phone">
             <el-upload
               class="avatar-uploader"
-              action="https://jsonplaceholder.typicode.com/posts/"
+              action="/api/info/updata"
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload">
-              <img v-if="imageUrl" :src="imageUrl" class="avatar">
+              <img v-if="information.imageUrl" :src="information.imageUrl" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
             </el-col>
@@ -80,11 +80,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'EditInfo',
   props: {
     dialog: Object,
-    formData: Object
+    information: Object
   },
   data() {
     return {
@@ -93,20 +94,31 @@ export default {
         num: [{required: true, message: '学号不能为空', trigger: 'blur' }],
         major: [{required: true, message: '专业不能为空', trigger: 'blur' }],
         grade: [{required: true, message: '年级不能为空', trigger: 'blur' }],
-        year: [{required: true, message: '出生年月不能为空', trigger: 'blur' }]
+        year: [{required: true, message: '出生年月不能为空', trigger: 'blur' }],
+        age: [{required: true, message: '年龄不能为空', trigger: 'blur' }],
+        class: [{required: true, message: '班级不能为空', trigger: 'blur' }],
+        face: [{required: true, message: '政治面貌不能为空', trigger: 'blur' }],
       },
       imageUrl: ''
     }
+  },
+  inject: ["reload"],
+  computed: {
+    ...mapGetters(['user'])
   },
   methods: {
     submit (form) {
       this.$refs[form].validate(valid => {
         if (valid) {
-          const url = this.dialog.option === 'add'? 'add' : `edit/${this.formData.id}`
-          console.log(url)
-          this.$axios.post(`/api/profiles/${url}`, this.formData)
+          let url = this.information.id ? 'edit' : 'add'
+          this.information.id = this.user.id;
+          this.$axios.post(`/api/info/${url}`, this.information)
             .then((res) => {
               console.log(res) 
+              this.$message({
+                message: res.data.msg,
+                type: res.data.type
+              })
               // 清空数据，并关闭弹窗
               this.$emit('changeShow', false)
               // 通过再次渲染页面来达到刷新当前页面的效果
@@ -121,12 +133,27 @@ export default {
       // 点击取消时，关闭弹窗，并清空数据
       this.$emit('changeShow', false)
     },
-    handleAvatarSuccess () {
+    handleAvatarSuccess (res, file) {
+        this.$message({
+          message: '上传成功',
+          type: 'success'
+        })
+        this.information.imageUrl = URL.createObjectURL(file.raw);
+        localStorage.setItem('imageUrl', URL.createObjectURL(file.raw));
+        this._initData();
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
 
-    },
-    beforeAvatarUpload () {
-
-    }
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+      }
   }
 }
 </script>
@@ -144,7 +171,7 @@ export default {
   width: 200px;
   height: 50px;
   float: left;
-  margin: 0;
+  margin-bottom: 10px;
 }
 .info .table .title {
   float: left;

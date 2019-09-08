@@ -6,6 +6,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">查询</el-button>
+         <el-button type="primary" @click="onEdit">{{ this.dialog.button }}</el-button>
       </el-form-item>
     </el-form>
     <el-row class="info">
@@ -26,8 +27,8 @@
       <!-- <div class="img">
         <img src="../assets/index.jpg" alt="">
       </div> -->
-      <el-form-item label="学号" prop="id" class="list">
-        <el-input type="number" v-model="information.id" auto-complete="off"></el-input>
+      <el-form-item label="学号" prop="num" class="list">
+        <el-input type="number" v-model="information.num" auto-complete="off"></el-input>
       </el-form-item>
       <el-form-item label="曾用名" prop="beforeName" class="list">
         <el-input type="text" v-model="information.beforeName" auto-complete="off"></el-input>
@@ -64,16 +65,17 @@
       <el-col :span="4" class="phone">
         <el-upload
           class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action="/api/info/updata"
+          :data="{id: this.user.id}"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <img v-if="information.imageUrl" :src="information.imageUrl" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
         </el-col>
     </el-row>
-    <edit-info @changeShow="changeShow" :dialog='dialog' :formData='formData'></edit-info>
+    <edit-info @changeShow="changeShow" :dialog='dialog' :information='information'></edit-info>
   </div>
 </template>
 
@@ -87,34 +89,34 @@ import { mapGetters } from 'vuex'
           name: '',
           gender: '男',
           age: '',
-          id: '',
+          num: '',
           class: '',
           beforeName: '',
           grade: '',
           year: '',
           face: '',
-          addr: '',
           major: ''
         },
         query: {
           id: ''
         },
-        imageUrl: '',
         dialog: {
-          show: true
+          show: false,
+          button: ''
         },
         formData: {
           name: '',
           gender: '男',
           age: '',
-          id: '',
+          num: '',
           class: '',
           beforeName: '',
           grade: '',
           year: '',
           face: '',
-          addr: '',
-          major: ''
+          major: '',
+          imageUrl: '',
+          id: ''
         }
       }
     },
@@ -126,23 +128,59 @@ import { mapGetters } from 'vuex'
     },
     created() {
       this.getData();
+      this.formData.id = this.user.id;
     },
     methods: {
       onSubmit () {
         console.log('submit!');
       },
-      handleAvatarSuccess () {
-
+      onEdit () {
+        this.dialog.show = true;
       },
-      beforeAvatarUpload () {
-
+      _initData () {
+        this.imageUrl = localStorage.imageUrl;
       },
-      changeShow () {
+      handleAvatarSuccess (res, file) {
+        this.$message({
+          message: '上传成功',
+          type: 'success'
+        })
+        this.information.imageUrl = URL.createObjectURL(file.raw);
+        localStorage.setItem('imageUrl', URL.createObjectURL(file.raw));
+        this._initData();
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+      },
+      changeShow (changeData) {
+        console.log(changeData)
+        this.dialog.show = changeData;
       },
       getData () {
-        this.$axios.post('/api/info', {id: this.user.id})
+        this.$axios.post('/api/info/', {id: this.user.id})
           .then((res) => {
-            console.log(this.user.id)
+            if (res.data.error) {
+              this.$message({
+                message: res.data.msg,
+                type: 'error'
+              })
+            }
+            let data = res.data;
+            this.information = data;
+            if (this.information.id) {
+              this.dialog.button = '编辑'
+            } else {
+              this.dialog.button = '添加个人信息'
+            }
           })
       }
     }
