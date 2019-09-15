@@ -11,6 +11,17 @@ const actions = {
     commit(types.SET_AUTHENTICATED, false)
     commit(types.SET_USER, null)
   }
+  // 在actions中使用axios异步请求数据
+  // RequestState: ({ commit }) => {
+  //   this.$axios.post('/api/users/login')
+  //     .then(res => {
+  //       console.log(res);
+  //       commit(types.GET_STATE, res.data);
+  //     })
+  //     .catch(err => {
+  //       throw err;
+  //     })
+  // }
 }
 
 export default actions;

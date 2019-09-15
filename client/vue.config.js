@@ -16,7 +16,9 @@ module.exports = {
       hotOnly: false,
       proxy: {
         '/api': {
-          target: 'http://localhost:5000/api/', //对应自己的接口
+          // 配置代理
+          //对应自己后端应用服务的接口
+          target: 'http://localhost:5000/api/', 
           changeOrigin: true,
           ws: true,
           pathRewrite: {
