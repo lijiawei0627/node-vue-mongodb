@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <div class="container">
-      <p class="title">米修在线</p>
-      <p class="make">专注于线上教育，用心做课程，用心做服务</p>
+      <p class="title animated lightSpeedIn">米修在线</p>
+      <p class="make animated lightSpeedIn">专注于线上教育，用心做课程，用心做服务</p>
     </div>
   </div>
 </template>

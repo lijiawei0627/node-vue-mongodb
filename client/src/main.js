@@ -5,11 +5,15 @@ import router from './router/index'
 import store from './store/index'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import '../public/css/reset.css'
+// 引入animate.css动画插件
+import animated from 'animate.css' 
 // import Bus from './bus'
 
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
+Vue.use(animated)
 
 Vue.prototype.$axios = axios
 

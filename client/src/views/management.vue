@@ -145,7 +145,7 @@ import { mapGetters } from 'vuex'
               this.information = res.data;
             })
         } else {
-          this.$axios({
+          this.$message({
             type: 'warning',
             message: '请使用管理员身份查询'
           })
@@ -241,6 +241,7 @@ import { mapGetters } from 'vuex'
 .info .phone .avatar-uploader{
   width: 200px;
   height: 210px;
+  margin-left: -25px;
 }
 .info .phone .avatar-uploader .avatar-uploader-icon {
   font-size: 28px;

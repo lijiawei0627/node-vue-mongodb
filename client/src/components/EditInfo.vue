@@ -10,7 +10,7 @@
           <el-form-item label="姓名" prop="name" class="list">
             <el-input type="text" v-model="information.name" auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item label="性别" class="list">
+          <el-form-item label="性别" class="list" prop="gender">
             <el-radio-group v-model="information.gender">
               <el-radio label="男"></el-radio>
               <el-radio label="女"></el-radio>
