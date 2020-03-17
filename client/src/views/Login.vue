@@ -148,5 +148,4 @@ export default {
           .redirect
             text-decoration: none
             font-size: 14px
-          
 </style>
